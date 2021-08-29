@@ -1,23 +1,12 @@
-import styled from "styled-components/";
-
-const Title = styled.h1`
-  font-size: 3em;
-  text-align: center;
-  color: palevioletred;
-`;
-
-const Wrapper = styled.section`
-  padding: 4em;
-  background: papayawhip;
-`;
+import {Header, Main, Footer} from "./components/Layout";
 
 function App() {
   return (
-    <Wrapper>
-      <Title>
-        It's gonna be awesome!
-      </Title>
-    </Wrapper>
+    <>
+      <Header>This is the header</Header>
+      <Main>This is the main</Main>
+      <Footer>This is the footer</Footer>
+    </>
   );
 }
 
