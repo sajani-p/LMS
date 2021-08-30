@@ -1,3 +1,4 @@
+import React from "react";
 import {Header, Main, Footer} from "./components/Layout";
 
 function App() {
