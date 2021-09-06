@@ -1,24 +1,43 @@
 import React from "react";
-import {Header, Main, Footer} from "./components/Layout";
+import {ThemeProvider} from "styled-components"
+import { BsBook } from "react-icons/bs";
+
+import { Main, Footer} from "./components/Layout";
 import { NavBar, NavItem,NavLink } from "./components/Navbar";
 
 function App() {
-  return (
-    <>
-      <Header>
-        <NavBar>
-          <NavItem href="#">
-            <NavLink>Catalog</NavLink>
-          </NavItem>
-          <NavItem href="#">
-            <NavLink>DashBoard</NavLink>
-          </NavItem>
-        </NavBar>
+  const theme = {
+    primary:{
+      main: "#29b6f6",
+      light: "#73e8ff",
+      dark: "#0086c3",
+      textColor: "#000",
+    },
+    secondary: {
+      main: "#fff",
+    },
+  };
 
-      </Header>
+  return (
+    <ThemeProvider theme = {theme}>
+      <NavBar>
+        <NavItem href="#">
+          <NavLink>
+            <BsBook />
+          </NavLink>
+        </NavItem>
+        <NavItem href="#">
+          <NavLink>Catalog</NavLink>
+        </NavItem>
+        <NavItem href="#">
+          <NavLink>DashBoard</NavLink>
+        </NavItem>
+      </NavBar>
+
       <Main>This is the main</Main>
+
       <Footer>This is the footer</Footer>
-    </>
+    </ThemeProvider>
   );
 }
 
