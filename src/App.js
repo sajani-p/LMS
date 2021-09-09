@@ -1,9 +1,14 @@
+// third party libraries
 import React from "react";
 import {ThemeProvider} from "styled-components"
 import { BsBook } from "react-icons/bs";
 
+// presantational components
 import { Main, Footer} from "./components/Layout";
 import { NavBar, NavItem,NavLink } from "./components/Navbar";
+
+// container components-logical components
+import Dashboard from "./containers/Dashboard";
 
 function App() {
   const theme = {
@@ -34,9 +39,13 @@ function App() {
         </NavItem>
       </NavBar>
 
-      <Main>This is the main</Main>
+      <Main>This is the main
+          <Dashboard/>
+      </Main>
 
-      <Footer>This is the footer</Footer>
+      <Footer>
+        Copyright {new Date().getFullYear()} &copy; Spark Academy{" "}
+      </Footer>
     </ThemeProvider>
   );
 }
