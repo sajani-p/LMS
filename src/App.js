@@ -4,7 +4,7 @@ import {ThemeProvider} from "styled-components"
 import { BsBook } from "react-icons/bs";
 
 // presantational components
-import { Main, Footer} from "./components/Layout";
+import { Main, Footer, Header} from "./components/Layout";
 import { NavBar, NavItem,NavLink } from "./components/Navbar";
 
 // container components-logical components
@@ -21,25 +21,29 @@ function App() {
     secondary: {
       main: "#fff",
     },
+    spacing: (factor) => `${factor * 8}px`,
   };
 
   return (
     <ThemeProvider theme = {theme}>
-      <NavBar>
-        <NavItem href="#">
-          <NavLink>
-            <BsBook />
-          </NavLink>
-        </NavItem>
-        <NavItem href="#">
-          <NavLink>Catalog</NavLink>
-        </NavItem>
-        <NavItem href="#">
-          <NavLink>DashBoard</NavLink>
-        </NavItem>
-      </NavBar>
+      <Header>
+        <NavBar>
+          <NavItem href="#">
+            <NavLink>
+              <BsBook />
+            </NavLink>
+          </NavItem>
+          <NavItem href="#">
+            <NavLink>Catalog</NavLink>
+          </NavItem>
+          <NavItem href="#">
+            <NavLink>DashBoard</NavLink>
+          </NavItem>
+        </NavBar>
+      </Header>
 
-      <Main>This is the main
+      <Main>
+        
           <Dashboard/>
       </Main>
 
@@ -47,6 +51,7 @@ function App() {
         Copyright {new Date().getFullYear()} &copy; Spark Academy{" "}
       </Footer>
     </ThemeProvider>
+
   );
 }
 
