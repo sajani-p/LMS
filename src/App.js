@@ -1,14 +1,20 @@
 // third party libraries
-import React from "react";
+import React, { Suspense } from "react";
 import {ThemeProvider} from "styled-components"
 import { BsBook } from "react-icons/bs";
+import { BrowserRouter as Router, Switch,Route} from "react-router-dom";
 
 // presantational components
 import { Main, Footer, Header} from "./components/Layout";
 import { NavBar, NavItem,NavLink } from "./components/Navbar";
+import Spinner from "./components/Spinner";
 
 // container components-logical components
-import Dashboard from "./containers/Dashboard";
+import { DASHBOARD, CATALOG } from "./shared/routes";
+
+const Dashboard = React.lazy(() => {
+  return import("./containers/Dashboard");
+})
 
 function App() {
   const theme = {
@@ -24,26 +30,37 @@ function App() {
     spacing: (factor) => `${factor * 8}px`,
   };
 
+  let routes = (
+    <Suspense fallback={<Spinner />}>
+      <Switch>
+        <Route exact path={DASHBOARD} component = {Dashboard} />
+        <Route exact path={CATALOG} component = {Spinner} />
+      </Switch>
+    </Suspense>
+  );
+
   return (
     <ThemeProvider theme = {theme}>
       <Header>
         <NavBar>
-          <NavItem href="#">
-            <NavLink>
+          <NavItem>
+            <NavLink href={CATALOG}>
               <BsBook />
             </NavLink>
           </NavItem>
-          <NavItem href="#">
-            <NavLink>Catalog</NavLink>
+          <NavItem>
+            <NavLink href={CATALOG}>Catalog</NavLink>
           </NavItem>
-          <NavItem href="#">
-            <NavLink>DashBoard</NavLink>
+          <NavItem>
+            <NavLink href={DASHBOARD}>DashBoard</NavLink>
           </NavItem>
         </NavBar>
       </Header>
 
       <Main>
-          <Dashboard/>
+          <Router>
+              {routes}
+          </Router>
       </Main>
 
       <Footer>
