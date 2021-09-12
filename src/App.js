@@ -43,7 +43,6 @@ function App() {
       </Header>
 
       <Main>
-        
           <Dashboard/>
       </Main>
 
