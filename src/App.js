@@ -37,6 +37,7 @@ function App() {
   let routes = (
     <Suspense fallback={<Spinner />}>
       <Switch>
+        <Route exact path="/" component = {Dashboard} />
         <Route exact path={DASHBOARD} component = {Dashboard} />
         <Route exact path={CATALOG} component = {Spinner} />
         <Route component = {NotFound} />
