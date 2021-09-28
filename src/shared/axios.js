@@ -1,4 +1,4 @@
-import axios from 'axios'; // handle the http request, connct the backend and frontend ports
+import axios from 'axios'; // handle the http request, connect the backend and frontend ports
 
 const lmsAPIHostProd = "http://api.lms.net";
 const lmsAPIHostDev = "http://localhost:3001";  //port for backend
