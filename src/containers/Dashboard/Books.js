@@ -24,9 +24,18 @@ const Books = ({ catalog }) => {
           },
     ]
 
+    const handleTableRowClick = (id) => {
+        console.log(id)
+    };
+
     return (
         <FluidContainer>
-            <Table data={updateCatalog} />
+            <Table 
+                data={updateCatalog} 
+                handleRowClick={handleTableRowClick} 
+                instruction="Click to view book"
+                
+            />
         </FluidContainer>
     );
 };
