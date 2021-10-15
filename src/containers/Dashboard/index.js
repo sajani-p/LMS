@@ -4,12 +4,12 @@ import Tabs  from "../../components/Tabs";
 import { getBooks } from "../../api/bookAPI"
 import Spinner  from "../../components/Spinner";
 
-import Books from './Books';
+import Books from "./Books";
 
 const Dashboard = () => {
     const [isLoading, setIsLoading] = useState(false);
 
-    const [books, setBooks] = useState([])
+    const [books, setBooks] = useState(null)
 
     useEffect(() => {
         setIsLoading(true);
