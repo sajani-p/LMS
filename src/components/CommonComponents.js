@@ -17,22 +17,24 @@ export const Container = styled.div`
 `;
 
 export const ContainerInLine = styled.div`
+    flex: 1 1 0;
     display: inline-flex;
     flex-direction: column;
     justify-content: center;
     aign-items: flex-start;
     padding: 1em;
+    text-align: left;
 `;
 
 export const FlexRow = styled.div`
     display:flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 1em;
+    padding: 1em 5em;
 `;
 
 export const Button = styled.button`
-    background: ${(props) => props.theme.primary.main};
+    background-color: ${(props) => props.danger ? props.theme.primary.danger : props.theme.primary.main};
     color: ${(props) => props.theme.primary.textColor};
     font-size: 1em;
     padding: 0.25em 1em;
@@ -42,6 +44,6 @@ export const Button = styled.button`
     height: 1.5em;
 
     :hover{
-        background-color: ${(props) => props.theme.primary.dark};
+        background-color: ${(props) => props.danger ? props.theme.primary.dangerDark : props.theme.primary.dark};
     }
 `;
