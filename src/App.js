@@ -13,7 +13,7 @@ import Spinner from "./components/Spinner";
 import { DASHBOARD, CATALOG } from "./shared/routes";
 
 const Dashboard = React.lazy(() => {
-  return import("./containers/Dashboard");
+  return import("./containers/Dashboard/index");
 });
 
 const NotFound = React.lazy(() => {
@@ -27,6 +27,8 @@ function App() {
       light: "#73e8ff",
       dark: "#0086c3",
       textColor: "#000",
+      danger: "#e91e63",
+      dangerDark: "#b0003a",
     },
     secondary: {
       main: "#fff",
