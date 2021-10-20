@@ -38,6 +38,8 @@ export const Button = styled.button`
     color: ${(props) => props.theme.primary.textColor};
     font-size: ${(props) => props.size ? props.size : 1}em;
     padding: 0.25em 1em;
+    margin-right: 1em;
+    margin-left: 1em;
     border: 0;
     border-radius: 0.5em;
     cursor: pointer;

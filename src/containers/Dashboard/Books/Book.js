@@ -9,6 +9,7 @@ import {
     FlexRow 
 } from "../../../components/CommonComponents";
 import Spinner from "../../../components/Spinner";
+import ConfirmationDialog from "../../../components/ConfirmationDialog";
 
 import { getBook } from "../../../api/bookAPI"; 
 import BookCoverPlaceHolder from "../../../shared/b4.jpg"
@@ -28,6 +29,14 @@ const H2 = styled.h1`
 const Book = ({id, handleBackClick}) => {
     const [isLoading, setIsLoading] = useState(false);
     const [book, setBook] = useState(null);
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+
+    const handleDelete = (confirmation) => {
+        if (confirmation) {
+            console.log("Delete confirmed"); 
+        }
+        setShowDeleteConfirmation(false)
+    };
 
     useEffect(() => {
         setIsLoading(true);
@@ -46,64 +55,72 @@ const Book = ({id, handleBackClick}) => {
     }, [id]);
     
     return (
-        <Container>
-            <Button onClick={handleBackClick} size={1.5}>
-                <IoReturnUpBack/>
-            </Button> 
-            
-            {!isLoading && book !== null ? (
-                <>     {/* if render two components there should be a one parent element or a fragment  */}
-                    <FlexRow>
-                        <ContainerInLineTextAlignLeft>
-                            <H1>{book.title}</H1>
-                            <H2>{`by: ${book.author}`}</H2>
-                            <p>
-                                Video provides a powerful way to help you prove your point. When you click Online Video, you can paste in the embed code for the video you want to add. You can also type a keyword to search online for the video that best fits your document
-                            </p>
+        <>
+            <Container>
+                <Button onClick={handleBackClick} size={1.5}>
+                    <IoReturnUpBack/>
+                </Button> 
+                
+                {!isLoading && book !== null ? (
+                    <>     {/* if render two components there should be a one parent element or a fragment  */}
+                        <FlexRow>
+                            <ContainerInLineTextAlignLeft>
+                                <H1>{book.title}</H1>
+                                <H2>{`by: ${book.author}`}</H2>
+                                <p>
+                                    Video provides a powerful way to help you prove your point. When you click Online Video, you can paste in the embed code for the video you want to add. You can also type a keyword to search online for the video that best fits your document
+                                </p>
+                                {book.isAvailable ? (
+                                    ""
+                                ) : (
+                                    <> 
+                                        <h4>{`Burrowed by: ${book.borrowedMemberId}`}</h4>
+                                        <h4>{`Burrowed date: ${book.borrowedDate}`}</h4>
+                                    </>
+                                )}
+                            </ContainerInLineTextAlignLeft>
+                            <ContainerInLine>
+                                <img 
+                                    src={BookCoverPlaceHolder} 
+                                    alt="Book Cover Place Holder" 
+                                    style={{border: "1px solid black"}}
+                                />
+                            </ContainerInLine>
+                        </FlexRow>
+
+                        <FlexRow>
                             {book.isAvailable ? (
-                                ""
+                                <>
+                                    <Button onClick={()=>console.log("Call Lend API")}>
+                                        Lend
+                                    </Button>
+                                    <Button danger onClick={()=>setShowDeleteConfirmation(true)}>
+                                        Delete
+                                    </Button>
+                                </>
                             ) : (
-                                <> 
+                                <>
                                     <h4>{`Burrowed by: ${book.borrowedMemberId}`}</h4>
                                     <h4>{`Burrowed date: ${book.borrowedDate}`}</h4>
+                            
+                                    <Button onClick={()=>console.log("Call ReturnBook API")}>
+                                        Return
+                                    </Button>
                                 </>
                             )}
-                        </ContainerInLineTextAlignLeft>
-                        <ContainerInLine>
-                            <img 
-                                src={BookCoverPlaceHolder} 
-                                alt="Book Cover Place Holder" 
-                                style={{border: "1px solid black"}}
-                            />
-                        </ContainerInLine>
-                    </FlexRow>
-
-                    <FlexRow>
-                        {book.isAvailable ? (
-                            <>
-                                <Button onClick={()=>console.log("Call Lend API")}>
-                                    Lend
-                                </Button>
-                                <Button danger onClick={()=>console.log("Call DeleteBook API")}>
-                                    Delete
-                                </Button>
-                            </>
-                        ) : (
-                            <>
-								<h4>{`Burrowed by: ${book.borrowedMemberId}`}</h4>
-								<h4>{`Burrowed date: ${book.borrowedDate}`}</h4>
-						
-                                <Button onClick={()=>console.log("Call ReturnBook API")}>
-                                    Return
-                                </Button>
-                            </>
-                        )}
-                    </FlexRow>
-                </>
-            ) : (
-                <Spinner />   
-            )}
-        </Container>
+                        </FlexRow>
+                    </>
+                ) : (
+                    <Spinner />   
+                )}
+            </Container>
+            <ConfirmationDialog 
+                handleClose={handleDelete} 
+                show={showDeleteConfirmation}
+                headerText="Confirm book deletion"
+                detailText="Are you sure want to delete this book? This action can't be undone."
+            />
+        </>
     );
 };
 
