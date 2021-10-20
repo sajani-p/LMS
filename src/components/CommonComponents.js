@@ -34,7 +34,16 @@ export const FlexRow = styled.div`
 `;
 
 export const Button = styled.button`
-    background-color: ${(props) => props.danger ? props.theme.primary.danger : props.theme.primary.main};
+    background-color: ${(props) => {
+        switch (props.color){
+            case "danger":
+                return props.theme.primary.danger;
+            case "secondary":
+                return props.theme.secondary.main;
+            default:
+                return props.theme.primary.main;
+        }
+    }};
     color: ${(props) => props.theme.primary.textColor};
     font-size: ${(props) => props.size ? props.size : 1}em;
     padding: 0.25em 1em;
@@ -46,6 +55,15 @@ export const Button = styled.button`
     height: 1.5em;
 
     :hover{
-        background-color: ${(props) => props.danger ? props.theme.primary.dangerDark : props.theme.primary.dark};
+        background-color: ${(props) => {
+            switch (props.color){
+                case "danger":
+                    return props.theme.primary.dangerDark;
+                case "secondary":
+                    return props.theme.secondary.dark;
+                default:
+                    return props.theme.primary.dark;
+            }
+        }};
     }
 `;
