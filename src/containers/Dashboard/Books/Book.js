@@ -117,15 +117,10 @@ const Book = ({id, handleBackClick}) => {
                                     </Button>
                                 </>
                             ) : (
-                                <>
-                                    <h4>{`burrowed by: ${book.burrowedMemberId}`}</h4>
-                                    <h4>{`burrowed date: ${book.burrowedDate}`}</h4>
-                            
                                     <Button onClick={()=>setShowReturnConfirmation(true)}>
                                         Return
                                     </Button>
-                                </>
-                            )}
+                            )} 
                         </FlexRow>
                     </>
                 ) : (
