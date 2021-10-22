@@ -17,9 +17,10 @@ export const getRequest = async (url) => {
     }
 };
 
+//borrow book -> put request
 export const putRequest = async (url, data) => {
     try {
-        let response = await axios.get(url, data);
+        let response = await axios.put(url, data);
 
         return {
             data: response.data,

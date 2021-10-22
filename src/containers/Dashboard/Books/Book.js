@@ -12,8 +12,9 @@ import Spinner from "../../../components/Spinner";
 import ConfirmationDialog from "../../../components/ConfirmationDialog";
 import LendDialog from "./LendDialog"
 
-import { getBook } from "../../../api/bookAPI"; 
-import BookCoverPlaceHolder from "../../../shared/b4.jpg"
+import { getBook, lendBook } from "../../../api/bookAPI"; 
+import BookCoverPlaceHolder from "../../../shared/b4.jpg";
+import { getTodaysDate } from "../../../shared/utils";
 
 const ContainerInLineTextAlignLeft = styled(ContainerInLine)`
     align-item: flex-start;
@@ -40,9 +41,9 @@ const Book = ({id, handleBackClick}) => {
         setShowDeleteConfirmation(false);
     };
 
-    const handleLend = (confirmed, member) => {
+    const handleLend = (confirmed, memberId) => {
         if (confirmed) {
-            console.log("Book lend to", member); 
+            lendBook(book.id, memberId, getTodaysDate());
         }
         setShowLendConfirmation(false);
     };
@@ -83,8 +84,8 @@ const Book = ({id, handleBackClick}) => {
                                     ""
                                 ) : (
                                     <> 
-                                        <h4>{`Burrowed by: ${book.borrowedMemberId}`}</h4>
-                                        <h4>{`Burrowed date: ${book.borrowedDate}`}</h4>
+                                        <h4>{`Borrowed by: ${book.borrowedMemberId}`}</h4>
+                                        <h4>{`Borrowed date: ${book.borrowedDate}`}</h4>
                                     </>
                                 )}
                             </ContainerInLineTextAlignLeft>
@@ -109,8 +110,8 @@ const Book = ({id, handleBackClick}) => {
                                 </>
                             ) : (
                                 <>
-                                    <h4>{`Burrowed by: ${book.borrowedMemberId}`}</h4>
-                                    <h4>{`Burrowed date: ${book.borrowedDate}`}</h4>
+                                    <h4>{`Borrowed by: ${book.borrowedMemberId}`}</h4>
+                                    <h4>{`Borrowed date: ${book.borrowedDate}`}</h4>
                             
                                     <Button onClick={()=>console.log("Call ReturnBook API")}>
                                         Return
@@ -124,7 +125,7 @@ const Book = ({id, handleBackClick}) => {
                 )}
             </Container>
             <ConfirmationDialog 
-                handleClose={handleDelete} 
+                handleClose={handleDelete } 
                 show={showDeleteConfirmation}
                 headerText="Confirm book deletion"
                 detailText="Are you sure want to delete this book? This action can't be undone."
