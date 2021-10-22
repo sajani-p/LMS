@@ -12,7 +12,7 @@ import Spinner from "../../../components/Spinner";
 import ConfirmationDialog from "../../../components/ConfirmationDialog";
 import LendDialog from "./LendDialog"
 
-import { getBook, lendBook, returnBook } from "../../../api/bookAPI"; 
+import { getBook, lendBook, returnBook, deleteBook } from "../../../api/bookAPI"; 
 import BookCoverPlaceHolder from "../../../shared/b4.jpg";
 import { getTodaysDate } from "../../../shared/utils";
 
@@ -31,13 +31,13 @@ const H4 = styled.h4`
 const Book = ({id, handleBackClick}) => {
     const [isLoading, setIsLoading] = useState(false);
     const [book, setBook] = useState(null);
-    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [showLendConfirmation, setShowLendConfirmation] = useState(false);
     const [showReturnConfirmation, setShowReturnConfirmation] = useState(false);
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
     const handleDelete = (confirmation) => {
         if (confirmation) {
-            console.log("Delete confirmed"); 
+            deleteBook(book.id); 
         }
         setShowDeleteConfirmation(false);
     };
