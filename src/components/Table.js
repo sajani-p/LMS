@@ -27,7 +27,7 @@ const StyledTable = styled.table`
   tr > th {
     padding: 0.25em 0.5 em;
   }
-  tr > td {
+  tr > th {
     cursor: pointer;
   
   }
@@ -74,12 +74,12 @@ const TableMarkup = ({ titles, data, handleClick, caption }) => (
 );
 
 const Table = ({ data, handleRowClick, instruction }) =>
-data ? (
+  data ? (
     <TableMarkup
       titles={Object.keys(data[0])}
       data={data}
-      handleClick={handleRowClick}
-      caption={instruction}
+      handleClick={handleRowClick ? handleRowClick : ()=> {}}
+      caption={instruction ? instruction : ""}
     />
   ) : (
     "No data to populate"

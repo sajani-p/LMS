@@ -12,7 +12,7 @@ import Spinner from "../../../components/Spinner";
 import ConfirmationDialog from "../../../components/ConfirmationDialog";
 import LendDialog from "./LendDialog"
 
-import { getBook, lendBook } from "../../../api/bookAPI"; 
+import { getBook, lendBook, returnBook } from "../../../api/bookAPI"; 
 import BookCoverPlaceHolder from "../../../shared/b4.jpg";
 import { getTodaysDate } from "../../../shared/utils";
 
@@ -20,11 +20,11 @@ const ContainerInLineTextAlignLeft = styled(ContainerInLine)`
     align-item: flex-start;
 `;
 
-const H1 = styled.h1`
+const H3 = styled.h3`
     text-align: left;
 `;
 
-const H2 = styled.h1`
+const H4 = styled.h4`
     text-align: left;
 `;
 
@@ -33,6 +33,7 @@ const Book = ({id, handleBackClick}) => {
     const [book, setBook] = useState(null);
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [showLendConfirmation, setShowLendConfirmation] = useState(false);
+    const [showReturnConfirmation, setShowReturnConfirmation] = useState(false);
 
     const handleDelete = (confirmation) => {
         if (confirmation) {
@@ -48,21 +49,28 @@ const Book = ({id, handleBackClick}) => {
         setShowLendConfirmation(false);
     };
 
+    const handleReturn = (confirmation) => {
+        if (confirmation) {
+            returnBook(book.id);
+        }
+        setShowReturnConfirmation(false);
+    };
+
     useEffect(() => {
         setIsLoading(true);
         getBook(id)
-            .then((response) =>{
-                if(!response.error) {
-                    setBook(response.data)
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-            .finally(()=> {
-                setIsLoading(false);
-            });
-    }, [id]);
+          .then((response) => {
+            if (!response.error) {
+              setBook(response.data);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+          .finally(() => {
+            setIsLoading(false);
+          });
+      }, [id]);
     
     return (
         <>
@@ -72,11 +80,11 @@ const Book = ({id, handleBackClick}) => {
                 </Button> 
                 
                 {!isLoading && book !== null ? (
-                    <>     {/* if render two components there should be a one parent element or a fragment  */}
+                    <>     
                         <FlexRow>
                             <ContainerInLineTextAlignLeft>
-                                <H1>{book.title}</H1>
-                                <H2>{`by: ${book.author}`}</H2>
+                                <H3>{book.title}</H3>
+                                <H4>{`by: ${book.author}`}</H4>
                                 <p>
                                     Video provides a powerful way to help you prove your point. When you click Online Video, you can paste in the embed code for the video you want to add. You can also type a keyword to search online for the video that best fits your document
                                 </p>
@@ -84,8 +92,8 @@ const Book = ({id, handleBackClick}) => {
                                     ""
                                 ) : (
                                     <> 
-                                        <h4>{`Borrowed by: ${book.borrowedMemberId}`}</h4>
-                                        <h4>{`Borrowed date: ${book.borrowedDate}`}</h4>
+                                        <h4>{`burrowed by: ${book.burrowedMemberId}`}</h4>
+                                        <h4>{`burrowed date: ${book.burrowedDate}`}</h4>
                                     </>
                                 )}
                             </ContainerInLineTextAlignLeft>
@@ -110,10 +118,10 @@ const Book = ({id, handleBackClick}) => {
                                 </>
                             ) : (
                                 <>
-                                    <h4>{`Borrowed by: ${book.borrowedMemberId}`}</h4>
-                                    <h4>{`Borrowed date: ${book.borrowedDate}`}</h4>
+                                    <h4>{`burrowed by: ${book.burrowedMemberId}`}</h4>
+                                    <h4>{`burrowed date: ${book.burrowedDate}`}</h4>
                             
-                                    <Button onClick={()=>console.log("Call ReturnBook API")}>
+                                    <Button onClick={()=>setShowReturnConfirmation(true)}>
                                         Return
                                     </Button>
                                 </>
@@ -133,6 +141,12 @@ const Book = ({id, handleBackClick}) => {
             <LendDialog 
                 handleClose={handleLend} 
                 show={showLendConfirmation}
+            />
+            <ConfirmationDialog 
+                handleClose={handleReturn } 
+                show={showReturnConfirmation}
+                headerText="Confirm book return"
+                detailText="Press 'confirm' to return book."
             />
         </>
     );
