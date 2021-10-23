@@ -101,7 +101,12 @@ const Book = ({id, handleBackClick}) => {
                                 <img 
                                     src={BookCoverPlaceHolder} 
                                     alt="Book Cover Place Holder" 
-                                    style={{border: "1px solid black"}}
+                                    style={{
+                                        border: "1px solid black",
+                                        width: "50%",
+                                        height: "50%",
+                                    }}
+                                
                                 />
                             </ContainerInLine>
                         </FlexRow>
