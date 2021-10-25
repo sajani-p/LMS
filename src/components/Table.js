@@ -27,7 +27,7 @@ const StyledTable = styled.table`
   tr > th {
     padding: 0.25em 0.5 em;
   }
-  tr > th {
+  tr > td {
     cursor: pointer;
   
   }
