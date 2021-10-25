@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { IoReturnUpBack} from "react-icons/io5"; //back button icon
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
 
 import { 
     Button, 
@@ -15,6 +16,7 @@ import LendDialog from "./LendDialog"
 import { getBook, lendBook, returnBook, deleteBook } from "../../../api/bookAPI"; 
 import BookCoverPlaceHolder from "../../../shared/b4.jpg";
 import { getTodaysDate } from "../../../shared/utils";
+import { updateBook } from "../../../store/booksSlice"
 
 const ContainerInLineTextAlignLeft = styled(ContainerInLine)`
     align-item: flex-start;
@@ -35,6 +37,8 @@ const Book = ({id, handleBackClick}) => {
     const [showReturnConfirmation, setShowReturnConfirmation] = useState(false);
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
+    const dispatch = useDispatch();
+
     const handleDelete = (confirmation) => {
         if (confirmation) {
             deleteBook(book.id); 
@@ -44,14 +48,39 @@ const Book = ({id, handleBackClick}) => {
 
     const handleLend = (confirmed, memberId) => {
         if (confirmed) {
-            lendBook(book.id, memberId, getTodaysDate());
+            setIsLoading(true);
+            lendBook(book.id, memberId, getTodaysDate())
+            .then((response) => {
+                if (!response.error) {
+                  console.log(response.data);
+                  dispatch(updateBook(response.data));
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
         }
         setShowLendConfirmation(false);
     };
 
     const handleReturn = (confirmation) => {
         if (confirmation) {
-            returnBook(book.id);
+            returnBook(book.id)
+            .then((response) => {
+                if (!response.error) {
+                  console.log(response.data);
+                  dispatch(updateBook(response.data));
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
         }
         setShowReturnConfirmation(false);
     };
