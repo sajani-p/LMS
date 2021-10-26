@@ -10,9 +10,10 @@ export const FluidContainer = styled.div`
 
 export const Container = styled.div`
     display: flex;
-    flex-diraction: column;
-    justify-content: center;
-    aign-items: flex-start;
+    flex-direction: ${(props) => props.flexDirection ? props.flexDirection : "column"};
+    justify-content: ${(props) => props.justifyContent ? props.justifyContent : "center"};
+    align-items: ${(props) => props.alignItems ? props.alignItems : "flex-start"};
+    width: ${(props) => props.disableFullWidth ? "initial" : "100%"};
     padding: 1em;
 `;
 
@@ -34,16 +35,56 @@ export const FlexRow = styled.div`
 `;
 
 export const Button = styled.button`
-    background-color: ${(props) => props.danger ? props.theme.primary.danger : props.theme.primary.main};
+    background-color: ${(props) => {
+        switch (props.color){
+            case "danger":
+                return props.theme.primary.danger;
+            case "secondary":
+                return props.theme.secondary.light;
+            default:
+                return props.theme.primary.main;
+        }
+    }};
     color: ${(props) => props.theme.primary.textColor};
-    font-size: 1em;
+    font-size: ${(props) => props.size ? props.size : 1}em;
     padding: 0.25em 1em;
+    margin-right: 1em;
+    margin-left: 1em;
     border: 0;
     border-radius: 0.5em;
     cursor: pointer;
     height: 1.5em;
 
+    ${(props) => props.rounded ? 'border-radius: 100%; padding : 0.5em' : "" }
+
     :hover{
-        background-color: ${(props) => props.danger ? props.theme.primary.dangerDark : props.theme.primary.dark};
+        background-color: ${(props) => {
+            switch (props.color){
+                case "danger":
+                    return props.theme.primary.dangerDark;
+                case "secondary":
+                    return props.theme.secondary.dark;
+                default:
+                    return props.theme.primary.dark;
+            }
+        }};
+    }
+`;
+
+export const Select = styled.select`
+    height: 35px;
+    background: white;
+    color: gray;
+    padding: 0.5em;
+    font-size: 0.8em;
+    border: 2px solid ${(props) => props.theme.secondary.light};
+    border-radius: 0.5em;
+    margin-left: 1em;
+    option {
+        color: black;
+        background: white;
+        display: flex;
+        white-space: 20px;
+        padding: 0px 2px 1px;
     }
 `;

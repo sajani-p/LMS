@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
 
-import Tabs  from "../../components/Tabs";
-import { getBooks } from "../../api/bookAPI"
 import Spinner  from "../../components/Spinner";
+import Tabs  from "../../components/Tabs";
+import Books from "./Books/index";
 
-import Books from "./Books";
+import { setBooks } from '../../store/booksSlice';
+import { getBooks } from "../../api/bookAPI"
 
 const Dashboard = () => {
     const [isLoading, setIsLoading] = useState(false);
+    // const [books, setBooks] = useState(null);
 
-    const [books, setBooks] = useState(null)
+    const booksFromRedux = useSelector((state) => state.books.value)
+    const dispatch = useDispatch()
 
     useEffect(() => {
         setIsLoading(true);
@@ -17,7 +21,7 @@ const Dashboard = () => {
             .then((response)=>{
                 if (!response.error) {
                     console.log(response.data);
-                    setBooks(response.data);
+                    dispatch(setBooks(response.data));
                 }
             })
             .catch((error)=>{
@@ -26,12 +30,12 @@ const Dashboard = () => {
             .finally(()=>{
                 setIsLoading(false);
             })
-    }, [])  // by using [] useEfect is only running in first run
+    }, [dispatch])  // by using [] useEfect is only running in first run
 
     const contents = [
         {
             title: "Books", 
-            elements: <Books catalog={books}/>,
+            elements: <Books catalog={booksFromRedux}/>,
         },
         {
             title: "Members", 
